@@ -1,14 +1,13 @@
   //#include <megaTinyCore.h>
 #include<math.h>
 
-#define RESOLUTION 100
+#define RESOLUTION 200
 #define ADC 1024 //Digits
 #define RESISTOR 10 //Ohm
-#define MAXVOLTAGE 3.84 //Volt
-#define OFFSET 550 //ADC/2 //Volt
-#define RAUSCHEN 150 //Digits
-#define VOLTAGE 14//Pin
-#define CURRENT 15//Pin
+#define MAXVOLTAGE 3.9 //Volt
+#define OFFSET 490//ADC/2 //Volt
+#define VOLTAGE 14//Pin A0
+#define CURRENT 15//Pin A1
 
 void setup() {
   // put your setup code here, to run once:
@@ -58,9 +57,14 @@ for (int i = 0; i<RESOLUTION; i++){
 }   
 rms = rmsValue(iArr, RESOLUTION);
 current = rms / RESISTOR;
-  Serial.print("Current");
+  Serial.print("Current: ");
   Serial.print(current);
   Serial.print("A");
+  Serial.println("\t");  
+  Serial.flush();
+    Serial.print("Current: ");
+  Serial.print(current * 1000);
+  Serial.print("mA");
   Serial.println("\t");  
   Serial.flush();
 /***********************/
@@ -74,8 +78,8 @@ for (int i = 0; i<RESOLUTION; i++){
 } 
 /*RMS Voltage*/
 rmsV = rmsValue(vArr, RESOLUTION);
-voltage = rmsV / 0.002; //2k/1Meg=0.002
-  Serial.print("Voltage");
+voltage = rmsV / 0.0032; //2k/1Meg=0.002
+  Serial.print("Voltage: ");
   Serial.print(voltage);
   Serial.print("V");
   Serial.println("\t");  
@@ -85,7 +89,7 @@ voltage = rmsV / 0.002; //2k/1Meg=0.002
 /**********POWER**********/
 power = voltage * current;
 //power = 230 * current;
-  Serial.print("Power");
+  Serial.print("Power: ");
   Serial.print(power);
   Serial.print("W");
   Serial.println("\t");  
@@ -93,7 +97,7 @@ power = voltage * current;
 /************************/
 
 /*********RED*********/
-if (power < 4.0) {
+if (power < 1.6) {
     digitalWrite(9, HIGH);
     digitalWrite(10, LOW);
 } else {
@@ -109,10 +113,16 @@ if (power < 4.0) {
   int readI = analogRead(CURRENT);
   Serial.print("Val: ");
   Serial.print(readI);
+  Serial.print(" -> ");
+  readI = analogRead(CURRENT) - OFFSET;
+  Serial.print(readI);
   Serial.println("\t");  
   Serial.flush();
     int readV = analogRead(VOLTAGE);
   Serial.print("Val: ");
+  Serial.print(readV);
+  Serial.print(" -> ");
+  readV = analogRead(VOLTAGE) - OFFSET;
   Serial.print(readV);
   Serial.println("\t");  
   Serial.flush();
@@ -120,5 +130,5 @@ if (power < 4.0) {
   Serial.print("**********************");
   Serial.println("\t");
   Serial.flush();
-  delay(1000);
+  delay(400);
 }
