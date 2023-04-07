@@ -4,8 +4,8 @@
 #define RESOLUTION 200
 #define ADC 1024 //Digits
 #define RESISTOR 10 //Ohm
-#define MAXVOLTAGE 3.9 //Volt
-#define OFFSET 490//ADC/2 //Volt
+#define MAXVOLTAGE 3.0 //Volt
+#define OFFSET 512//ADC/2 //Volt
 #define VOLTAGE 14//Pin A0
 #define CURRENT 15//Pin A1
 
