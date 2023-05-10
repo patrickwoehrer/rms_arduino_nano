@@ -78,7 +78,7 @@ for (int i = 0; i<RESOLUTION; i++){
 } 
 /*RMS Voltage*/
 rmsV = rmsValue(vArr, RESOLUTION);
-voltage = rmsV / 0.0032; //2k/1Meg=0.002
+voltage = rmsV / 0.0033; //3k3/1Meg=0.0033
   Serial.print("Voltage: ");
   Serial.print(voltage);
   Serial.print("V");
